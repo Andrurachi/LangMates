@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import ApiConnector from "../../../api/apiConnector";
@@ -6,7 +6,10 @@ import ApiEndpoints from "../../../api/apiEndpoints";
 import AppPaths from "../../../lib/appPaths";
 import "../authStyle.css";
 
+
 const SignupScreen = ({ history }) => {
+  const [language, setLanguage] = useState("en");
+
   const {
     register,
     handleSubmit,
@@ -18,6 +21,9 @@ const SignupScreen = ({ history }) => {
   const image = watch("image");
 
   const onSubmit = async (signupData) => {
+
+    signupData.language = language;
+
     const formData = new FormData();
     formData.append("image", signupData.image[0]);
     delete signupData["image"];
@@ -121,6 +127,21 @@ const SignupScreen = ({ history }) => {
               </p>
             )}
           </div>
+
+          <div className="authFieldContainer">
+            <label htmlFor="language">Select the language you speak:</label>
+            <select
+              id="language"
+              name="language"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
+              <option value="es">Español</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
+
           <br />
           <button className="btn btn-outline-warning btn-block" type="submit">
             Sign Up

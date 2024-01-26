@@ -3,17 +3,16 @@ from django.contrib.auth.models import AbstractUser
 from shortuuidfield import ShortUUIDField
 
 class User(AbstractUser):
-	userId = ShortUUIDField()
-	image = models.ImageField(upload_to="user")
-	LANGUAGES = [
+    userId = ShortUUIDField()
+    image = models.ImageField(upload_to="user")
+    LANGUAGES = [
         ('en', 'English'),
-        ('es', 'Spanish')
+        ('es', 'Spanish'),
     ]
     language = models.CharField(max_length=2, choices=LANGUAGES, default='en')
-	
 
 class OnlineUser(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-	def __str__(self):
-		return self.user.username
+    def __str__(self):
+        return self.user.username

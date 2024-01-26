@@ -9,7 +9,7 @@ from apps.chat.models import ChatRoom
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ['id', 'image', 'first_name', 'last_name']
+		fields = ['id', 'image', 'first_name', 'last_name', 'language']
 
 class LoginSerializer(TokenObtainPairSerializer):
 	@classmethod
@@ -31,13 +31,14 @@ class SignupSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = (
-			'first_name', 'last_name', 'image', 'email', 'password', 'passwordTwo'
+			'first_name', 'last_name', 'image', 'email', 'password', 'passwordTwo', 'language'
 		)
 		extra_kwargs = {
 			'first_name': {'required': True},
 			'last_name': {'required': True},
 			'email': {'required': True},
 			'password': {'required': True},
+			'language': {'required': True},
 		}
 
 	def validate(self, attrs):
@@ -54,7 +55,8 @@ class SignupSerializer(serializers.ModelSerializer):
 			email=validated_data['email'],
 			first_name=validated_data['first_name'],
 			last_name=validated_data['last_name'],
-			image=validated_data['image']
+			image=validated_data['image'],
+			language=validated_data['language']
 		)
 		user.set_password(validated_data['password'])
 		user.save()
