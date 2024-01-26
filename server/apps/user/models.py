@@ -5,6 +5,12 @@ from shortuuidfield import ShortUUIDField
 class User(AbstractUser):
 	userId = ShortUUIDField()
 	image = models.ImageField(upload_to="user")
+	LANGUAGES = [
+        ('en', 'English'),
+        ('es', 'Spanish')
+    ]
+    language = models.CharField(max_length=2, choices=LANGUAGES, default='en')
+	
 
 class OnlineUser(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
